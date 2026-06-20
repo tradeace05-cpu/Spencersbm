@@ -26,7 +26,8 @@ exports.handler = async function(event) {
   if (!country || !product) return { statusCode:400, headers, body: JSON.stringify({error:"country and product required"}) };
 
   try {
-    const url = BASE + "/user/buy/activation/" + encodeURIComponent(country) + "/any/" + encodeURIComponent(product);
+    // Correct format: query parameters, not path
+    const url = BASE + "/user/buy/activation?country=" + encodeURIComponent(country) + "&operator=any&product=" + encodeURIComponent(product);
     console.log("[buy-number] calling 5SIM:", url);
     
     const res = await fetch(url, {
@@ -63,4 +64,3 @@ exports.handler = async function(event) {
     return { statusCode:502, headers, body: JSON.stringify({error: "Exception: " + e.message}) };
   }
 };
-
