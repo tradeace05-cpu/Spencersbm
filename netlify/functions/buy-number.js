@@ -1,4 +1,4 @@
-const API_KEY = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4MTM0NzMzNzksImlhdCI6MTc4MTkzNzM3OSwicmF5IjoiYmI2YTIzZjc4ZTkyM2QyNTI4NTZmMjQwYzhkMmEwNzAiLCJzdWIiOjQyMjY5MzZ9.b9lOiLM5pdUsQTPk59aNtOSubfqfJkAzL8c2AByJzkJQV0ENyVnDJB7DDe2vXdemglCGUfVkAadtKV_70BpLMuaTVBJbAfOaBUBPL_VG26yTUMD4pfqiuLpoMUQCtAomR2lSy-1yePlKCzWljRSQWnp_M8R5IBrucET4q_Q6RAQif87s9nsCMv08Jb4kPmJuKywOI1Y8qtBXmkReVSOVGzd-8KePPaQByhKFajMyvarxEYBPRVZMLC1KY0uJz8xea8iiLUDfh4sW29CYprprRK6vrnZuFfudjsyFcbSKp8Y-heQueffD4a-6qzG8RTfWGK0psNUbAHagm2FS9ICguQ";
+const API_KEY = "896f3e9907ab4910b2aef75e2efe0d0c";
 const BASE = "https://5sim.net/v1";
 
 exports.handler = async function(event) {
@@ -26,14 +26,13 @@ exports.handler = async function(event) {
   if (!country || !product) return { statusCode:400, headers, body: JSON.stringify({error:"country and product required"}) };
 
   try {
-    // Correct format: query parameters, not path
-    const url = BASE + "/user/buy/activation?country=" + encodeURIComponent(country) + "&operator=any&product=" + encodeURIComponent(product);
+    // Correct format: query parameters with API key
+    const url = BASE + "/user/buy/activation?country=" + encodeURIComponent(country) + "&operator=any&product=" + encodeURIComponent(product) + "&api_key=" + API_KEY;
     console.log("[buy-number] calling 5SIM:", url);
     
     const res = await fetch(url, {
       method: "GET",
       headers: { 
-        "Authorization": "Bearer " + API_KEY, 
         "Accept": "application/json",
         "User-Agent": "spencerbm/1.0"
       }
